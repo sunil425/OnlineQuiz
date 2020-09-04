@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PhyComponent } from './phy/phy.component';
-import { ChemistryComponent } from './chemistry/chemistry.component';
-import { MathsComponent } from './maths/maths.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
 
-  {path : '' , redirectTo:'/quiz/phy' , pathMatch:'full'},
-  {path : 'quiz/phy' , component:PhyComponent},
-  {path : 'quiz/math' , component:MathsComponent},
-  {path : 'quiz/chem' , component:ChemistryComponent},
+  {path : '' , redirectTo:'/home' , pathMatch:'full'},
+  {path : 'home' , component:HomeComponent},
+  {path : 'login' , component:LoginComponent},
+  {path : 'signup' , component:SignUpComponent},
+
+
 
 ];
 
