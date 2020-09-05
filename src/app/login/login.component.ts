@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,14 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginRef', {static: true }) loginElement: ElementRef;
 
   auth2:any
+
+  validateUser = new FormGroup({
+    password:new FormControl('', Validators.required),
+    email:new FormControl('',Validators.email)
+
+  })
+
+  constructor(private userService:DataService) { }
 
   fbLibrary() {
  
@@ -56,7 +66,6 @@ googleSDK() {
   }(document, 'script', 'google-jssdk'));
  
 }
-  constructor() { }
 
   ngOnInit(): void {
     this.fbLibrary();
@@ -103,6 +112,17 @@ prepareLoginButton() {
       alert(JSON.stringify(error, undefined, 2));
     });
  
+}
+
+
+loginUser(){
+  this.userService.validateUser(this.validateUser.value).subscribe(
+    res=>{
+      console.log(res)
+    },
+    error=>{console.log(error)}
+  )
+  console.log(this.validateUser.value)
 }
 
 }

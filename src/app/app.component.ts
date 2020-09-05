@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
-import { SharingService } from './sharing.service';
 
 
 @Component({
@@ -13,7 +12,7 @@ export class AppComponent {
 
   
   
-  constructor(private service :DataService,private shareService:SharingService) {}
+  constructor(private service :DataService) {}
 
   ngOnInit(): void {
      

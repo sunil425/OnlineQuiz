@@ -6,13 +6,15 @@
     
         <div class="w-50   col my-auto  mx-auto     ">
             <h1><b> Log In </b></h1> <br>
-    
-            <input type="text" id="username" placeholder="Your Name"> <br> <br>
-            <input type="text" id="password" placeholder="Your Password"> <br><br>
-    
-    
-            <input type="checkbox"> &nbsp; &nbsp; &nbsp; <span>Remember me</span> <br> <br>
-            <button class="btn btn-primary">Login</button> <br> <br> <br><br><br><br>
+    <form [formGroup]="validateUser">
+
+        <input type="text" id="username" placeholder="Your Email" formControlName="email" > <br> <br>
+        <input type="password" id="password" placeholder="Your Password" formControlName="password" > <br><br>
+
+
+        <input type="checkbox"> &nbsp; &nbsp; &nbsp; <span>Remember me</span> <br> <br>
+        <button (click)="loginUser()" class="btn btn-primary">Login</button> <br> <br> <br><br><br><br>
+    </form>
     
             <span id="login_option">Or login with</span> &nbsp; &nbsp; <span  (click)="login()"> <i class="fab fa-facebook-square"
                     style="font-size: 28px;"></i> </span>

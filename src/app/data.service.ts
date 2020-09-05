@@ -9,8 +9,13 @@ export class DataService {
 
   constructor(private http:HttpClient) { }
 
-  getQues(){
-    return this.http.get('../src/assets/test_data.json');
+  addUser(addUser){
+    return this.http.post('http://localhost:8080/user/signup',addUser,{ responseType: 'text' as 'json' }
+    );
+  }
+
+  validateUser(validateUser){
+    return this.http.post('http://localhost:8080/user/login',validateUser,{ responseType: 'text' as 'json' })
   }
 
 }
