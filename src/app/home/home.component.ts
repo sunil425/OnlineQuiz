@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
     first_name:any
     last_name:any
     name:any
+    res:any;
+    showAlert=false;
 
   
 
@@ -21,10 +23,38 @@ export class HomeComponent implements OnInit {
    this.first_name= this.route.snapshot.paramMap.get('first_name')
    this.last_name= this.route.snapshot.paramMap.get('last_name')
    this.name= this.route.snapshot.paramMap.get('name')
+   this.res= this.route.snapshot.paramMap.get('res')
 
 
 
-   console.log(this.first_name,this.last_name,this.name)
+   if(this.first_name!==null && this.last_name!==null ){
+     this.name=''
+
+     this.showAlert=true
+   }
+
+   else if(this.name!==null){
+     this.first_name='';
+     this.last_name=''
+     this.showAlert=true
+
+   }
+
+   else if(this.res=="Login Successfull"){
+    this.name=''
+    this.first_name='';
+    this.last_name=''
+
+     this.showAlert=true
+
   }
+
+   else{
+     this.showAlert=false
+   }
+   console.log(this.first_name,this.last_name,this.name,this.res)
+  }
+
+
 
 }

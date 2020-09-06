@@ -1,4 +1,11 @@
-    <div class="row mx-auto my-5">
+<div *ngIf="showAlert" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Sorry,</strong> Details are Invalid Try Again
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="row mx-auto my-5">
         <div class=" w-50 col  my-auto mx-5">
             <img src="./assets/signin-image.jpg" alt=""> <br> <br> <br>
             <span class="mx-5 " routerLink="/signup">Create an account</span>
@@ -9,11 +16,32 @@
     <form [formGroup]="validateUser">
 
         <input type="text" id="username" placeholder="Your Email" formControlName="email" > <br> <br>
+
+        <div *ngIf="validateUser.controls.email.touched || validateUser.controls.email.dirty" class="text-danger">
+    
+            
+            <div *ngIf="validateUser.controls.email.errors?.required">
+        
+                Email is required
+            
+                </div>
+        
+        </div>
         <input type="password" id="password" placeholder="Your Password" formControlName="password" > <br><br>
+        <div *ngIf="validateUser.controls.password.touched || validateUser.controls.password.dirty" class="text-danger">
+    
+            
+            <div *ngIf="validateUser.controls.password.errors?.required">
+        
+                Password is required
+            
+                </div>
+        
+        </div>
 
 
         <input type="checkbox"> &nbsp; &nbsp; &nbsp; <span>Remember me</span> <br> <br>
-        <button (click)="loginUser()" class="btn btn-primary">Login</button> <br> <br> <br><br><br><br>
+        <button [disabled]="!validateUser.valid" type="submit" (click)="loginUser()" class="btn btn-primary">Login</button> <br> <br> <br><br><br><br>
     </form>
     
             <span id="login_option">Or login with</span> &nbsp; &nbsp; <span  (click)="login()"> <i class="fab fa-facebook-square"

@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,30 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginRef', {static: true }) loginElement: ElementRef;
 
   auth2:any
-
+  res:any;
+  showAlert=false
   validateUser = new FormGroup({
     password:new FormControl('', Validators.required),
-    email:new FormControl('',Validators.email)
+    email:new FormControl('',Validators.required)
 
   })
 
-  constructor(private userService:DataService) { }
+  constructor(private userService:DataService,private router:Router,private route: ActivatedRoute , private ngZone:NgZone) { }
+
+  ngOnInit(): void {
+    this.fbLibrary();
+    this.googleSDK();
+    this.res= this.route.snapshot.paramMap.get('res')
+
+    if(this.res=="the email is already registered"){
+      this.showAlert=false
+    }
+    else{
+      this.showAlert=true
+    }
+
+  }
+
 
   fbLibrary() {
  
@@ -67,11 +84,7 @@ googleSDK() {
  
 }
 
-  ngOnInit(): void {
-    this.fbLibrary();
-    this.googleSDK();
-  }
-
+  
 
   login() {
  
@@ -85,6 +98,8 @@ googleSDK() {
  
             console.log("user information");
             console.log(userInfo);
+            this.ngZone.run(()=>this.router.navigate(['/home',userInfo]));  
+
           });
            
         } else {
@@ -106,6 +121,8 @@ prepareLoginButton() {
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail());
       //YOUR CODE HERE
+      this.ngZone.run(()=>this.router.navigate(['/home',{name:profile.getName()}]));  
+
  
  
     }, (error) => {
@@ -119,6 +136,13 @@ loginUser(){
   this.userService.validateUser(this.validateUser.value).subscribe(
     res=>{
       console.log(res)
+      if(res=="Invalid Details")
+      {
+        this.showAlert=true
+      }
+      else{      this.router.navigate(['/home',{res:res}]);  
+    }
+
     },
     error=>{console.log(error)}
   )

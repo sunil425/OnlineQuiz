@@ -1,3 +1,21 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+  .row{
+    background-color: black;
+    color: white;
+  }
+
+  hr { 
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  } 
+
+  :host {
+    display: block;
+    background-color: #3EECAC;
+background-image: linear-gradient(19deg, #3EECAC 0%, #EE74E1 100%);
+
+}
+

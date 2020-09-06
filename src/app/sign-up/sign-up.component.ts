@@ -13,6 +13,8 @@ export class SignUpComponent implements OnInit {
   @ViewChild('loginRef', {static: true }) loginElement: ElementRef;
 
   auth2:any
+  res:any
+  showAlert=false
 
   constructor(private userService:DataService ,private router:Router ,private ngZone: NgZone) { }
 
@@ -69,8 +71,7 @@ googleSDK() {
 
   addUser = new FormGroup({
     name:new FormControl('',Validators.required),
-    password:new FormControl('',Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
-    ),
+    password:new FormControl('',Validators.required),
     email:new FormControl('',Validators.required)
 
   })
@@ -112,7 +113,6 @@ prepareLoginButton() {
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail());
-      let name =profile.getName()
       this.ngZone.run(()=>this.router.navigate(['/home',{name:profile.getName()}]));  
  
  
@@ -125,9 +125,19 @@ prepareLoginButton() {
  
 
   registerUser(){
+    
     this.userService.addUser(this.addUser.value).subscribe(
       res=>{
+
         console.log(res)
+
+        if(res=="the email is already registered")
+        {
+          this.showAlert=true
+        }
+        else{      this.router.navigate(['/home',{res:res}]);  
+      }
+
       },
       error=>{console.log(error)}
     )
