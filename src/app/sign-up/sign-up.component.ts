@@ -33,6 +33,54 @@ export class SignUpComponent implements OnInit {
   })
 
 
+
+  fbLibrary() {
+
+    (window as any).fbAsyncInit = function() {
+      window['FB'].init({
+        appId      : '3094231864035840',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.1'
+      });
+      window['FB'].AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+}
+
+
+googleSDK() {
+
+  window['googleSDKLoaded'] = () => {
+    window['gapi'].load('auth2', () => {
+      this.auth2 = window['gapi'].auth2.init({
+        client_id: '209777883139-effihbo4e4lgf7rs3g59thfcnuljt56o.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      this.prepareLoginButton();
+    });
+  }
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'google-jssdk'));
+
+}
+
+
   login() {
  
     window['FB'].login((response) => {
